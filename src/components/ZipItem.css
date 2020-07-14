@@ -1,0 +1,31 @@
+#item {
+    padding: 20px;
+    margin: auto;
+}
+
+td, th{
+    border: 2px solid;
+    padding: 10px;
+}
+
+td {
+    text-align: center;
+    
+}
+
+tr {
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #E9967A;
+}
+
+tr:nth-child(odd) {
+    background-color: #afeeee;
+}
+
+th[scope="row"]{
+    background-color: #121212;
+    color: #fff;
+}

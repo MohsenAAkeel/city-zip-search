@@ -16,7 +16,7 @@ class App extends Component {
     
 
     /*
-    entry point for city input
+    Step 1 of update pathway - entry point for city input
       @params: val - city name
       @returns: none
       @post: a link to an API call using the city name is generated and passed
@@ -34,7 +34,7 @@ class App extends Component {
 
     
     /*
-    entry point for zip input
+     Step 1 of update pathway - entry point for zip input
       @params: val - zip code
       @returns: none
       @post: a link to an API call using the zip code is generated and passed
@@ -49,10 +49,16 @@ class App extends Component {
 	const link = this.state.base_link_zip.concat(val);
 	await this.updateData(link, 'zip');
     }
-    
+
+    /*
+      Step 2 of update pathway - collect zip or city data
+      @params: link - the full web address for the API request
+               field - the field of data being retrieved 
+      @post: the data from 'link' is collected, extracted and 
+             passed to fillData()
+    */
     updateData = async (link, field) => {
-	//We can now make the API call, pull the data from the
-	//response and fill our :result: state
+	//make the API call and process the results
 	await axios.get(link)
 	 .then( response => {
 	     //Collect the data from the API call
@@ -68,9 +74,6 @@ class App extends Component {
 	     }
          
 	     //can now fill the result array
-	     //this.state.fxnRoute[field](data);
-	     //console.log("The APP RAW DATA: ", data);
-	     //console.log("The APP FIELD: ", field);
 	     this.fillData(data, field);
 	 })
 	 .catch(error => {
@@ -80,9 +83,14 @@ class App extends Component {
     }    
     
     
-    //Method for filling the :results: array with
-    //the data corresponding to the location, longitude
-    //latitude, and population.
+    /*
+      Step 3 of update pathway - fill state with API results
+      @params: data - the data of interest from the API call
+               field - the field of data being retrieved 
+      @post: the data from 'link' is parsed and loaded into
+             an array that is then passed to 
+             updateResultsState()
+    */
     fillData = (data, field) => {
 	let items = [];
 	
@@ -101,6 +109,13 @@ class App extends Component {
     }
 
 
+    /*
+      Step 4 of update pathway - setState
+      @params: data - the full web address for the API request
+               field - the field of data being retrieved 
+      @post: the data array containing the API data is stored
+             in the state container.
+    */
     updateResultsState = async (data, field) => {
 	await this.setState(prevState => {
 	    let results = Object.assign({}, prevState.results);
@@ -117,6 +132,8 @@ class App extends Component {
 	return data;
     }
 
+
+    //Reset state.results when update cycle is complete
     resetResult = ()=> {
 	Object.keys(this.state.results).forEach(function(key){ this.state.results[key] = []; });
     }

@@ -13,7 +13,14 @@ class Display extends Component {
 		  }
 	};
     }
+    
 
+    /*
+      Function for displaying Zip API search results
+      @params(secondary): this.props.arr - an array of arrays containing zip data 
+      @post: An array of ZipItem components is filled using the this.props.arr elements
+      @returns: An array of ZipItem components
+    */
     renderZip = () => {
 	var items = this.props.arr.map(function(item, i) {
 	    return (
@@ -22,6 +29,13 @@ class Display extends Component {
 	return items;
     }
 
+    
+    /*
+      Function for displaying City API search results
+      @params(secondary): this.props.arr - an array of arrays containing city data 
+      @post: An array of ZipTable components is filled using the this.props.arr elements
+      @returns: An array of ZipTable components
+    */
     renderCity = () => {
 	return <ZipTable arr={this.props.arr} />;
     }
